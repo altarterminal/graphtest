@@ -27,11 +27,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument('input_file', nargs='?', type=str, default='-')
 parser.add_argument('-d', '--output_dir', type=str, default='.')
 parser.add_argument('-t', '--is_header', action='store_true')
+parser.add_argument('-yl', '--y_lower', type=int)
+parser.add_argument('-yu', '--y_upper', type=int)
 
 args      = parser.parse_args()
 in_file   = args.input_file
 out_dir   = args.output_dir
 is_header = args.is_header
+y_lower   = args.y_lower
+y_upper   = args.y_upper
 
 if in_file == '-':
   in_file = sys.stdin
@@ -50,6 +54,16 @@ elif os.access(out_dir, os.W_OK):
 else:
   output_info(out_dir + ' is newly made')
   os.makedirs(out_dir)
+
+if y_lower == None:
+  is_y_lower = False
+else:
+  is_y_lower = True
+
+if y_upper == None:
+  is_y_upper = False
+else:
+  is_y_upper = True
 
 if is_stdin:
   prefix = 'stdin_'
@@ -115,6 +129,12 @@ for i in range(data_seq.shape[0]):
 
 if is_header:
   plt.legend(loc = "upper left")
+
+if is_y_lower:
+  plt.ylim(bottom=y_lower)
+
+if is_y_upper:
+  plt.ylim(top=y_upper)
 
 #####################################################################
 # post
