@@ -68,7 +68,7 @@ else:
 if is_stdin:
   prefix = 'stdin_'
 else:
-  prefix = os.path.basename(in_file) 
+  prefix = os.path.basename(in_file) + '_'
 
 date_now = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 
