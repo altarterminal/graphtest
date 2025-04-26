@@ -25,10 +25,12 @@ def output_info(msg):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('input_file', nargs='?', type=str, default='-')
-parser.add_argument('-d', '--output_dir', type=str, default='.')
-parser.add_argument('-t', '--is_header', action='store_true')
-parser.add_argument('-yl', '--y_lower', type=int)
-parser.add_argument('-yu', '--y_upper', type=int)
+parser.add_argument('-d', '--output-dir', type=str, default='.')
+parser.add_argument('-t', '--is-header', action='store_true')
+parser.add_argument('--y-lower', type=int)
+parser.add_argument('--y-upper', type=int)
+parser.add_argument('--x-label', type=str, default='')
+parser.add_argument('--y-label', type=str, default='')
 
 args      = parser.parse_args()
 in_file   = args.input_file
@@ -36,6 +38,8 @@ out_dir   = args.output_dir
 is_header = args.is_header
 y_lower   = args.y_lower
 y_upper   = args.y_upper
+x_label   = args.x_label
+y_label   = args.y_label
 
 if in_file == '-':
   in_file = sys.stdin
@@ -55,15 +59,11 @@ else:
   output_info(out_dir + ' is newly made')
   os.makedirs(out_dir)
 
-if y_lower == None:
-  is_y_lower = False
-else:
-  is_y_lower = True
+is_y_lower = (y_lower != None)
+is_y_upper = (y_upper != None)
 
-if y_upper == None:
-  is_y_upper = False
-else:
-  is_y_upper = True
+is_x_label = (x_label != "")
+is_y_label = (y_label != "")
 
 if is_stdin:
   prefix = 'stdin_'
@@ -135,6 +135,12 @@ if is_y_lower:
 
 if is_y_upper:
   plt.ylim(top=y_upper)
+
+if is_x_label:
+  plt.xlabel(x_label)
+
+if is_y_label:
+  plt.ylabel(y_label)
 
 #####################################################################
 # post

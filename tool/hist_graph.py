@@ -25,13 +25,17 @@ def output_info(msg):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('input_file', nargs='?', type=str, default='-')
-parser.add_argument('-d', '--output_dir', type=str, default='.')
-parser.add_argument('-t', '--is_header', action='store_true')
+parser.add_argument('-d', '--output-dir', type=str, default='.')
+parser.add_argument('-t', '--is-header', action='store_true')
+parser.add_argument('--x-label', type=str, default='')
+parser.add_argument('--y-label', type=str, default='')
 
 args      = parser.parse_args()
 in_file   = args.input_file
 out_dir   = args.output_dir
 is_header = args.is_header
+x_label   = args.x_label
+y_label   = args.y_label
 
 if in_file == '-':
   in_file = sys.stdin
@@ -50,6 +54,9 @@ elif os.access(out_dir, os.W_OK):
 else:
   output_info(out_dir + ' is newly made')
   os.makedirs(out_dir)
+
+is_x_label = (x_label != "")
+is_y_label = (y_label != "")
 
 if is_stdin:
   prefix = 'stdin_'
@@ -104,6 +111,12 @@ for str_line in str_lines:
 data_seq = np.array(num_lines).transpose()[0]
 
 plt.hist(data_seq)
+
+if is_x_label:
+  plt.xlabel(x_label)
+
+if is_y_label:
+  plt.ylabel(y_label)
 
 #####################################################################
 # post
