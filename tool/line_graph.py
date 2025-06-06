@@ -88,7 +88,7 @@ except ImportError:
 try:
   import matplotlib.pyplot as plt
 except ImportError:
-  output_error('numpy not found')
+  output_error('matplotlib not found')
   sys.exit(1)
 
 #####################################################################
